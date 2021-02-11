@@ -1,12 +1,17 @@
 import React, { FC } from 'react';
-
-import UsersList from '../components/UsersList/UsersList';
-import './App.css';
+import { ThemeProvider } from 'styled-components';
+import { GlobalStyle } from '../assets/styles/globalStyles';
+import { theme } from 'assets/styles/theme';
+import { Wrapper } from './Root.styles';
+import UsersList from '../components/organisms/UsersList/UsersList';
 
 const Root: FC = () => (
-  <>
-    <UsersList />
-  </>
+  <ThemeProvider theme={theme}>
+    <GlobalStyle />
+    <Wrapper>
+      <UsersList />
+    </Wrapper>
+  </ThemeProvider>
 );
 
 export default Root;
