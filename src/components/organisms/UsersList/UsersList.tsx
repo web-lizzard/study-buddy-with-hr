@@ -1,21 +1,9 @@
 import React, { FC, useState, useEffect } from 'react';
 
-import { users as usersData } from 'data/users';
+import { mockAPI } from 'utils/mockApi';
 import { UsersListItem } from 'components/molecules/UsersListItem/UserListItem';
 import { Wrapper } from './UsersList.styles';
 import { UserInterface } from '../../../interfaces/users.interface';
-
-const mockAPI = () => {
-  return new Promise<UserInterface[] | []>((resolve, reject) => {
-    setTimeout(() => {
-      if (usersData) {
-        resolve([...usersData]);
-      } else {
-        reject({ message: 'Error' });
-      }
-    }, 2000);
-  });
-};
 
 const UsersList: FC = () => {
   const [users, setUsersState] = useState<UserInterface[]>([]);
