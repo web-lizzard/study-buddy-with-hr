@@ -2,18 +2,32 @@ import { UserInterface } from '../interfaces/users.interface';
 
 export const users: UserInterface[] = [
   {
-    name: 'Jan Nowak',
-    average: '2.4',
-    attendance: '46%',
+    name: 'Adam Romański',
+    attendance: '39%',
+    average: '2.3',
   },
   {
-    name: 'Jaś Komasa',
+    name: 'Krzysztof Batko',
+    attendance: '23%',
+    average: '3.3',
+  },
+  {
+    name: 'Patrycja Gonciarz',
+    attendance: '45%',
     average: '4.3',
-    attendance: '67%',
   },
   {
-    name: 'Tomasz Nawolny',
-    average: '3.4',
-    attendance: '34%',
+    name: 'Olga Hahn',
+    attendance: '56%',
+    average: '4.1',
+  },
+  {
+    name: 'Paweł Andrzejewski',
+    attendance: '29%',
+    average: '2.4',
+  },
+  {
+    name: 'Paweł Roman',
+    average: '2.4',
   },
 ];

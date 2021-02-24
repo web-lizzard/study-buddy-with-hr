@@ -1,15 +1,49 @@
-import React, { FC } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 
-import { users } from 'data/users';
+import { users as usersData } from 'data/users';
 import { UsersListItem } from 'components/molecules/UsersListItem/UserListItem';
 import { Wrapper } from './UsersList.styles';
+import { UserInterface } from '../../../interfaces/users.interface';
+
+const mockAPI = () => {
+  return new Promise<UserInterface[] | []>((resolve, reject) => {
+    setTimeout(() => {
+      if (usersData) {
+        resolve([...usersData]);
+      } else {
+        reject({ message: 'Error' });
+      }
+    }, 2000);
+  });
+};
 
 const UsersList: FC = () => {
+  const [users, setUsersState] = useState<UserInterface[]>([]);
+  const [isLoading, setIsLoadingState] = useState<boolean>(true);
+
+  const fetchData = async () => {
+    const data = await mockAPI();
+    if (data) {
+      setIsLoadingState(false);
+      setUsersState(data);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const deleteUser = (name: string) => {
+    const filterData = users.filter((user) => user.name !== name);
+    setUsersState(filterData);
+  };
+
   return (
     <Wrapper>
+      <h1>{isLoading ? 'Loading...' : 'User List'}</h1>
       <ul>
         {users.map((userData) => (
-          <UsersListItem userData={userData} />
+          <UsersListItem deleteUser={deleteUser} key={userData.name} userData={userData} />
         ))}
       </ul>
     </Wrapper>

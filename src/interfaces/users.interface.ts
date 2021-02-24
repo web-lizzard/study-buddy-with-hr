@@ -1,5 +1,5 @@
 export interface UserInterface {
   name: string;
-  attendance: string;
+  attendance?: string;
   average: string;
 }
