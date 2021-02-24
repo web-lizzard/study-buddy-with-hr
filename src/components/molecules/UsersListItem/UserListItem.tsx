@@ -6,10 +6,11 @@ import { Average, UserInfo, Wrapper } from './UserListItem.styles';
 
 interface Props {
   userData: UserInterface;
+  deleteUser: (name: string) => void;
 }
 
 export const UsersListItem: React.FC<Props> = (props: Props) => {
-  const { name, attendance, average } = props.userData;
+  const { name, attendance = '0%', average } = props.userData;
 
   return (
     <Wrapper key={name}>
@@ -17,7 +18,7 @@ export const UsersListItem: React.FC<Props> = (props: Props) => {
       <UserInfo>
         <p>
           {name}
-          <Button />
+          <Button onClick={() => props.deleteUser(name)} />
         </p>
         <p>{`attendace: ${attendance}`}</p>
       </UserInfo>
