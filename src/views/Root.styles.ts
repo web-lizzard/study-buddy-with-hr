@@ -11,5 +11,5 @@ export const Wrapper = styled.div<StyledProps>`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100vh;
+  height: 100%;
 `;

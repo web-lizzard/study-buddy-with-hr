@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState, useEffect, createContext } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyle } from '../assets/styles/globalStyles';
@@ -9,30 +9,25 @@ import { formValueInterface } from 'interfaces/formValue.interface';
 import { mockAPI } from 'utils/mockApi';
 
 import { MainTemplate } from 'components/templates/MainTemplate/MainTemplate';
-import UsersList from '../components/organisms/UsersList/UsersList';
-import Form from '../components/organisms/Form/Form';
+import { Dashboard } from 'views/Dashboard';
+import { AddUser } from 'views/AddUser';
 
-const initialFormState: formValueInterface = {
-  name: '',
-  attendance: '',
-  average: '',
+type ContextProp = {
+  users: UserInterface[];
+  handleAddStudent: (values: formValueInterface) => void;
+  deleteUser: (name: string) => void;
 };
+
+export const UserContext = createContext<Partial<ContextProp>>({});
 
 const Root: FC = () => {
   const [users, setUsersState] = useState<UserInterface[]>([]);
   const [isLoading, setIsLoadingState] = useState<boolean>(true);
-  const [formValues, setFormValueState] = useState<formValueInterface>(initialFormState);
 
-  const handleFormFieldChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormValueState({ ...formValues, [e.target.name]: e.target.value });
-  };
-
-  const handleAddStudent = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (formValues.average !== '' || formValues.name !== '') {
-      const newStudent = { ...formValues };
-      setUsersState([...users, newStudent]);
-      setFormValueState(initialFormState);
+  const handleAddStudent = (values: formValueInterface) => {
+    if (values.average !== '' || values.name !== '') {
+      const newStudent = { ...values };
+      setUsersState([newStudent, ...users]);
     }
   };
 
@@ -58,16 +53,18 @@ const Root: FC = () => {
       <Router>
         <GlobalStyle />
         <MainTemplate>
-          <Wrapper>
-            <Switch>
-              <Route path="/" exact>
-                <UsersList deleteUser={deleteUser} users={users} isLoading={isLoading} />
-              </Route>
-              <Route path="/add-user">
-                <Form handleAddStudent={handleAddStudent} handleFormFieldChange={handleFormFieldChange} formValues={formValues} />
-              </Route>
-            </Switch>
-          </Wrapper>
+          <UserContext.Provider value={{ users, handleAddStudent, deleteUser }}>
+            <Wrapper>
+              <Switch>
+                <Route path="/" exact>
+                  <Dashboard deleteUser={deleteUser} users={users} isLoading={isLoading} />
+                </Route>
+                <Route path="/add-user">
+                  <AddUser />
+                </Route>
+              </Switch>
+            </Wrapper>
+          </UserContext.Provider>
         </MainTemplate>
       </Router>
     </ThemeProvider>

@@ -51,10 +51,5 @@ export const Average = styled.div<Props>`
   align-items: center;
   justify-content: center;
   color: ${({ theme }) => theme.colors.white};
-  font-size: ${({ theme }) => theme.fontSize.m};
-`;
-
-export const StyledTitle = styled.h1`
-  font-size: ${({ theme }) => theme.fontSize.xl};
-  color: ${({ theme }) => theme.colors.darkGrey};
+  font-size: ${({ theme }) => theme.fontSize.s};
 `;
