@@ -1,73 +1,60 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyle } from '../assets/styles/globalStyles';
 import { theme } from 'assets/styles/theme';
 import { Wrapper } from './Root.styles';
-import { UserInterface } from 'interfaces/users.interface';
-import { formValueInterface } from 'interfaces/formValue.interface';
-import { mockAPI } from 'utils/mockApi';
 
+import { UserProvider } from 'providers/UserProvider';
 import { MainTemplate } from 'components/templates/MainTemplate/MainTemplate';
-import UsersList from '../components/organisms/UsersList/UsersList';
-import Form from '../components/organisms/Form/Form';
-
-const initialFormState: formValueInterface = {
-  name: '',
-  attendance: '',
-  average: '',
-};
+import { Dashboard } from 'views/Dashboard';
+import { AddUser } from 'views/AddUser';
 
 const Root: FC = () => {
-  const [users, setUsersState] = useState<UserInterface[]>([]);
-  const [isLoading, setIsLoadingState] = useState<boolean>(true);
-  const [formValues, setFormValueState] = useState<formValueInterface>(initialFormState);
+  // const [users, setUsersState] = useState<UserInterface[]>([]);
+  // const [isLoading, setIsLoadingState] = useState<boolean>(true);
 
-  const handleFormFieldChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormValueState({ ...formValues, [e.target.name]: e.target.value });
-  };
+  // const handleAddStudent = (values: formValueInterface) => {
+  //   if (values.average !== '' || values.name !== '') {
+  //     const newStudent = { ...values };
+  //     setUsersState([newStudent, ...users]);
+  //   }
+  // };
 
-  const handleAddStudent = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (formValues.average !== '' || formValues.name !== '') {
-      const newStudent = { ...formValues };
-      setUsersState([...users, newStudent]);
-      setFormValueState(initialFormState);
-    }
-  };
+  // const fetchData = async () => {
+  //   const data = await mockAPI();
+  //   if (data) {
+  //     setIsLoadingState(false);
+  //     setUsersState(data);
+  //   }
+  // };
 
-  const fetchData = async () => {
-    const data = await mockAPI();
-    if (data) {
-      setIsLoadingState(false);
-      setUsersState(data);
-    }
-  };
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const deleteUser = (name: string) => {
-    const filterData = users.filter((user) => user.name !== name);
-    setUsersState(filterData);
-  };
+  // const deleteUser = (name: string) => {
+  //   const filterData = users.filter((user) => user.name !== name);
+  //   setUsersState(filterData);
+  // };
 
   return (
     <ThemeProvider theme={theme}>
       <Router>
         <GlobalStyle />
         <MainTemplate>
-          <Wrapper>
-            <Switch>
-              <Route path="/" exact>
-                <UsersList deleteUser={deleteUser} users={users} isLoading={isLoading} />
-              </Route>
-              <Route path="/add-user">
-                <Form handleAddStudent={handleAddStudent} handleFormFieldChange={handleFormFieldChange} formValues={formValues} />
-              </Route>
-            </Switch>
-          </Wrapper>
+          <UserProvider>
+            <Wrapper>
+              <Switch>
+                <Route path="/" exact>
+                  <Dashboard />
+                </Route>
+                <Route path="/add-user">
+                  <AddUser />
+                </Route>
+              </Switch>
+            </Wrapper>
+          </UserProvider>
         </MainTemplate>
       </Router>
     </ThemeProvider>

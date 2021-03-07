@@ -8,6 +8,8 @@ export interface themeInterface {
     success: string;
     error: string;
     warning: string;
+    darkPurple: string;
+    lightPurple: string;
   };
   fontSize: {
     l: string;

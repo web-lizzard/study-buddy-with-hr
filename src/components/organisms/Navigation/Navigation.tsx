@@ -9,7 +9,9 @@ export const Navigation = () => (
         Buddy
       </h1>
     </Logo>
-    <StyledLink to="/">Dashboard</StyledLink>
+    <StyledLink exact to="/">
+      Dashboard
+    </StyledLink>
     <StyledLink to="add-user">Add User</StyledLink>
   </Wrapper>
 );
