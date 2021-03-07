@@ -1,52 +1,69 @@
-import React, { FC, useState, useEffect } from 'react';
-
-import { users as usersData } from 'data/users';
+import React, { FC } from 'react';
 import { UsersListItem } from 'components/molecules/UsersListItem/UserListItem';
 import { Wrapper } from './UsersList.styles';
 import { UserInterface } from '../../../interfaces/users.interface';
 
-const mockAPI = () => {
-  return new Promise<UserInterface[] | []>((resolve, reject) => {
-    setTimeout(() => {
-      if (usersData) {
-        resolve([...usersData]);
-      } else {
-        reject({ message: 'Error' });
-      }
-    }, 2000);
-  });
-};
+import { StyledTitle } from '../../molecules/UsersListItem/UserListItem.styles';
 
-const UsersList: FC = () => {
-  const [users, setUsersState] = useState<UserInterface[]>([]);
-  const [isLoading, setIsLoadingState] = useState<boolean>(true);
+interface Props {
+  deleteUser: (name: string) => void;
+  users: UserInterface[];
+  isLoading: boolean;
+}
 
-  const fetchData = async () => {
-    const data = await mockAPI();
-    if (data) {
-      setIsLoadingState(false);
-      setUsersState(data);
-    }
-  };
+const UsersList: FC<Props> = (props: Props) => {
+  // const [users, setUsersState] = useState<UserInterface[]>([]);
+  // const [isLoading, setIsLoadingState] = useState<boolean>(true);
+  // const [formValues, setFormValueState] = useState<formValueInterface>({
+  //   name: '',
+  //   attendance: '',
+  //   average: '',
+  // });
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // const handleFormFieldChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setFormValueState({ ...formValues, [e.target.name]: e.target.value });
+  // };
 
-  const deleteUser = (name: string) => {
-    const filterData = users.filter((user) => user.name !== name);
-    setUsersState(filterData);
-  };
+  // const handleAddStudent = (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   const newStudent = { ...formValues };
+  //   setUsersState([...users, newStudent]);
+  //   setFormValueState({
+  //     name: '',
+  //     attendance: '',
+  //     average: '',
+  //   });
+  // };
+
+  // const fetchData = async () => {
+  //   const data = await mockAPI();
+  //   if (data) {
+  //     setIsLoadingState(false);
+  //     setUsersState(data);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
+
+  // const deleteUser = (name: string) => {
+  //   const filterData = users.filter((user) => user.name !== name);
+  //   setUsersState(filterData);
+  // };
+  const { deleteUser, isLoading, users } = props;
 
   return (
-    <Wrapper>
-      <h1>{isLoading ? 'Loading...' : 'User List'}</h1>
-      <ul>
-        {users.map((userData) => (
-          <UsersListItem deleteUser={deleteUser} key={userData.name} userData={userData} />
-        ))}
-      </ul>
-    </Wrapper>
+    <>
+      <Wrapper>
+        <StyledTitle>{isLoading ? 'Loading...' : 'Students List'}</StyledTitle>
+        <ul>
+          {users.map((userData) => (
+            <UsersListItem deleteUser={deleteUser} key={userData.name} userData={userData} />
+          ))}
+        </ul>
+      </Wrapper>
+    </>
   );
 };
 

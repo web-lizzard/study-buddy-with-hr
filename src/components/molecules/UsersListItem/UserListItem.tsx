@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { UserInterface } from '../../../interfaces/users.interface';
-import { Button } from 'components/atoms/Button/Button';
+import { DeleteButton } from 'components/atoms/DeleteButton/DeleteButton';
 import { Average, UserInfo, Wrapper } from './UserListItem.styles';
 
 interface Props {
@@ -18,7 +18,7 @@ export const UsersListItem: React.FC<Props> = (props: Props) => {
       <UserInfo>
         <p>
           {name}
-          <Button onClick={() => props.deleteUser(name)} />
+          <DeleteButton onClick={() => props.deleteUser(name)} />
         </p>
         <p>{`attendace: ${attendance}`}</p>
       </UserInfo>
