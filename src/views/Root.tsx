@@ -16,6 +16,7 @@ type ContextProp = {
   users: UserInterface[];
   handleAddStudent: (values: formValueInterface) => void;
   deleteUser: (name: string) => void;
+  isLoading: boolean;
 };
 
 export const UserContext = createContext<Partial<ContextProp>>({});
@@ -53,11 +54,11 @@ const Root: FC = () => {
       <Router>
         <GlobalStyle />
         <MainTemplate>
-          <UserContext.Provider value={{ users, handleAddStudent, deleteUser }}>
+          <UserContext.Provider value={{ users, handleAddStudent, deleteUser, isLoading }}>
             <Wrapper>
               <Switch>
                 <Route path="/" exact>
-                  <Dashboard deleteUser={deleteUser} users={users} isLoading={isLoading} />
+                  <Dashboard />
                 </Route>
                 <Route path="/add-user">
                   <AddUser />
