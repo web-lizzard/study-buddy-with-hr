@@ -1,7 +1,7 @@
 import React, { FC, useState, useContext } from 'react';
 import { ViewWrapper } from 'components/molecules/ViewWrapper/ViewWrapper';
 import { formValueInterface } from 'interfaces/formValue.interface';
-import { UserContext } from 'views/Root';
+import { UserContext } from 'providers/UserProvider';
 import { FormField } from 'components/molecules/FormField/FormField';
 import { Title } from 'components/atoms/Title/Title';
 import { Button } from 'components/atoms/Button/Button';

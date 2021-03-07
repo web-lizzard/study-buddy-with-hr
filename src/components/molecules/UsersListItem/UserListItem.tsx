@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import { UserInterface } from '../../../interfaces/users.interface';
 import { DeleteButton } from 'components/atoms/DeleteButton/DeleteButton';
 import { Average, UserInfo, Wrapper } from './UserListItem.styles';
-import { UserContext } from '../../../views/Root';
+import { UserContext } from 'providers/UserProvider';
 
 interface Props {
   userData: UserInterface;

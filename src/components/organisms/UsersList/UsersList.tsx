@@ -4,7 +4,7 @@ import { UsersListItem } from 'components/molecules/UsersListItem/UserListItem';
 import { UserInterface } from '../../../interfaces/users.interface';
 
 import { Title } from '../../atoms/Title/Title';
-import { UserContext } from '../../../views/Root';
+import { UserContext } from 'providers/UserProvider';
 
 interface Props {
   users: UserInterface[];
